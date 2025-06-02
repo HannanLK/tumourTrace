@@ -1,0 +1,153 @@
+What This Project Is About
+
+Tumor Segmentation Labeling Assistant is an AI-assisted medical imaging tool designed to help radiologists and researchers annotate tumors in medical scans (MRI, CT, etc.) more efficiently and accurately. It combines pre-trained segmentation models (like U-Net/nnU-Net) with an interactive UI where human experts can review, adjust, and validate the AI-predicted tumor boundaries.
+
+The tool aims to:
+
+* Reduce the time and manual effort in tumor annotation.
+* Improve annotation quality for training supervised ML models.
+* Support iterative learning (e.g., active learning or correction-feedback loops).
+* Enable explainability and uncertainty visualization to foster trust.
+
+---
+
+📚 2. **Research Papers, Videos & Resources to Study First**
+
+**Foundational Research**
+
+U-Net: Convolutional Networks for Biomedical Image Segmentation
+  Paper: [https://arxiv.org/abs/1505.04597](https://arxiv.org/abs/1505.04597)
+
+nnU-Net: Self-Adapting Framework for Medical Segmentation
+  Paper: [https://arxiv.org/abs/1809.10486](https://arxiv.org/abs/1809.10486)
+  Code: [https://github.com/MIC-DKFZ/nnUNet](https://github.com/MIC-DKFZ/nnUNet)
+
+MONAI (Medical Open Network for AI)
+  A PyTorch-based framework specifically designed for medical imaging
+  Link: [https://monai.io](https://monai.io)
+
+Active Learning for Medical Image Segmentation
+  Example paper: [https://arxiv.org/abs/1702.06559](https://arxiv.org/abs/1702.06559)
+
+🎥 **Videos / Lectures
+
+* Stanford CS 231n / MIT 6.S191 for CNN foundations
+* MONAI YouTube tutorials: [https://www.youtube.com/@ProjectMONAI](https://www.youtube.com/@ProjectMONAI)
+* nnU-Net walkthroughs on YouTube (look for tumor segmentation use cases)
+
+---
+
+🧩 3. **Key Features to Include**
+
+| **Category**         | **Feature**                                                               |
+| -------------------- | ------------------------------------------------------------------------- |
+| **Core**             | Upload DICOM/NIfTI scans, run AI segmentation (U-Net or nnU-Net)          |
+| **Annotation Tools** | Brush, eraser, region tools, slice navigation, 3D volume viewer           |
+| **AI Assistance**    | Pre-segmentation, uncertainty heatmaps, smart refinement suggestions      |
+| **User Input**       | Manual correction, label validation, undo/redo, zoom/pan                  |
+| **Storage**          | Save/export annotations (NIfTI/PNG masks), patient metadata management    |
+| **Learning Loop**    | Re-train or fine-tune with new user-corrected labels (active learning)    |
+| **Analytics**        | Dice coefficient comparison, AI vs Human error logging, label audit trail |
+| **UI**               | Medical-friendly UI with keyboard shortcuts, grayscale colormap, overlays |
+| **Security**         | Optional login/authentication, secure handling of sensitive patient data  |
+
+---
+
+🚀 4. **How to Start the Project**
+
+📌 Phase 1: Research & Setup
+
+* Study U-Net, nnU-Net, MONAI
+* Explore medical annotation tools like ITK-SNAP or 3D Slicer to get UI inspiration
+* Familiarize yourself with DICOM/NIfTI formats
+
+📌 Phase 2: Data & Model Prototyping
+
+* Select datasets (see next section)
+* Build a baseline segmentation model (e.g., U-Net via MONAI or nnU-Net)
+* Train or use pretrained models to segment tumor images
+
+📌 Phase 3: Frontend for Review & Correction
+
+* Build a web app with:
+
+  * **React + Cornerstone.js/VTK.js** for DICOM/NIfTI display
+  * Annotator canvas (like brush tool)
+  * Backend in **FastAPI** or **Flask** to serve model predictions
+
+📌 Phase 4: Advanced Additions
+
+* Add active learning: prioritize uncertain images
+* Enable retraining loop
+* Add metrics visualization
+
+---
+
+### 🧬 5. **Publicly Available Datasets**
+
+| **Dataset**                                    | **Type**            | **Tumor**        | **Link**                                                                                                                         |
+| ---------------------------------------------- | ------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **BraTS** (Brain Tumor Segmentation Challenge) | MRI (T1, T2, FLAIR) | Glioma           | [https://www.med.upenn.edu/cbica/brats2020/data.html](https://www.med.upenn.edu/cbica/brats2020/data.html)                       |
+| **TCIA - The Cancer Imaging Archive**          | DICOM               | Multiple cancers | [https://www.cancerimagingarchive.net](https://www.cancerimagingarchive.net)                                                     |
+| **LIDC-IDRI**                                  | CT scans            | Lung nodules     | [https://wiki.cancerimagingarchive.net/display/Public/LIDC-IDRI](https://wiki.cancerimagingarchive.net/display/Public/LIDC-IDRI) |
+| **KiTS (Kidney Tumor Segmentation)**           | CT                  | Kidney           | [https://kits21.grand-challenge.org/](https://kits21.grand-challenge.org/)                                                       |
+| **ProstateX**                                  | MRI                 | Prostate         | [https://grand-challenge.org/challenges/prostatex/](https://grand-challenge.org/challenges/prostatex/)                           |
+
+---
+
+⚠️ 6. Areas to Be Cautious About
+
+* Data Quality: Inconsistent or noisy labels can ruin training.
+* Class Imbalance: Some tumors are small → use Dice loss or focal loss.
+* Model Generalization: Models trained on one hospital’s data may not work on another.
+* Hardware Requirements: Training on 3D volumes (MRI) is GPU-intensive.
+* Regulatory & Ethical: Be cautious of privacy issues with medical data.
+* User Trust: Doctors won’t use it if the interface is slow, clunky, or hard to interpret.
+* Explainability: Always show how/why the model made that segmentation (attention maps, uncertainty, etc.).
+
+🧠 7. **Brainstorm Board (Miro/Whiteboard Style)
+
+```
+[ Problem ]
+    ↓
+Manual tumor annotation is slow, tedious, and error-prone
+
+[ Vision ]
+    ↓
+AI-assisted tool to accelerate and improve annotation quality
+
+[ AI Model ]
+    ↓
+- U-Net / nnU-Net
+- 2D/3D segmentation
+- Pre-trained on BraTS, KiTS, LIDC
+
+[ Core Modules ]
+    → Upload Scan (DICOM/NIfTI)
+    → View & Annotate
+    → Auto-segment
+    → Manual correction
+    → Save/export masks
+
+[ Advanced Features ]
+    → Active learning loop
+    → Uncertainty maps
+    → Model fine-tuning
+    → Audit trails + metrics
+
+[ Stack ]
+    → Frontend: React, VTK.js, Tailwind
+    → Backend: FastAPI, PyTorch (MONAI)
+    → Data: BraTS / KiTS / TCIA
+    → Model: nnU-Net pretrained or fine-tuned
+
+[ Who uses it? ]
+    → Radiologists
+    → ML researchers
+    → Medical students
+
+[ Long-Term ]
+    → Support for other organs
+    → Multi-modal scans (MRI+PET)
+    → FDA-compliant deployable tool
+```
